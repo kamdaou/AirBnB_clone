@@ -2,6 +2,7 @@
 """base_model - Contents our BaseModel"""
 import datetime
 import uuid
+from dateutil import parser
 
 
 class BaseModel:
@@ -22,11 +23,21 @@ class BaseModel:
         """prints class name, id and dict"""
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """initializes instances of BaseModel class"""
         self.id = str(uuid.uuid4())
         self.created_at = datetime.datetime.now()
         self.updated_at = datetime.datetime.now()
+        if kwargs is not None:
+            for key in kwargs:
+                if key != '__class__':
+                    setattr(self, key, kwargs[key])
+                if key == 'created_at' or key == 'updated_at':
+                    setattr(self, key, parser.parse(kwargs[key]))
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now()
 
     def save(self):
         """updates the public instance attribute updated_at with the current datetime"""

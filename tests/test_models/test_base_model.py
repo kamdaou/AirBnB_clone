@@ -36,10 +36,28 @@ class TestBaseModel(unittest.TestCase):
         """Test the to_dic method of BaseModel"""
         my_base_model = BaseModel()
         my_dic = my_base_model.to_dict()
-        custom_dic = {
+        my_custom_dic = {
             'id': my_dic.get('id'),
             'created_at': datetime.datetime(2022, 4, 24).isoformat(),
             'updated_at': datetime.datetime(2022, 4, 24).isoformat(),
             '__class__': 'BaseModel',
         }
-        self.assertEqual(my_dic, custom_dic)
+        self.assertEqual(my_dic, my_custom_dic)
+
+    def test_dict_with_kwargs(self):
+        """Test the to_dic method when a dictionary attribute is given"""
+        my_base_model = BaseModel()
+        my_base_model.test = 'test'
+        my_dic = my_base_model.to_dict()
+        my_second_base_model = BaseModel(**my_dic)
+        my_custom_dic = {
+            'id': my_dic.get('id'),
+            'created_at': datetime.datetime(2022, 4, 24),
+            'updated_at': datetime.datetime(2022, 4, 24),
+            '__class__': 'BaseModel',
+            'test': 'test'
+        }
+        self.assertIsInstance(my_second_base_model.updated_at, datetime.datetime)
+        self.assertIsInstance(my_second_base_model.created_at, datetime.datetime)
+        self.assertIsNot(my_base_model, my_second_base_model)
+        self.assertEqual(my_second_base_model.to_dict(), my_custom_dic)
