@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 """base_model - Contents our BaseModel"""
-import datetime
 import uuid
+from datetime import datetime
+
 from dateutil import parser
+
+import models
 
 
 class BaseModel:
@@ -11,8 +14,8 @@ class BaseModel:
 
     Attributes:
         id (str): id of the instance.
-        created_at (datetime.datetime): time when the instance has been created.
-        updated_at (datetime.datetime): time when the instance has been updated.
+        created_at (datetime): time when the instance has been created.
+        updated_at (datetime): time when the instance has been updated.
 
     Methods:
          save: updates the public instance attribute updated_at with the current datetime.
@@ -26,9 +29,9 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """initializes instances of BaseModel class"""
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
-        if kwargs is not None:
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+        if kwargs != {}:
             for key in kwargs:
                 if key != '__class__':
                     setattr(self, key, kwargs[key])
@@ -36,12 +39,14 @@ class BaseModel:
                     setattr(self, key, parser.parse(kwargs[key]))
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.datetime.now()
-            self.updated_at = datetime.datetime.now()
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def save(self):
         """updates the public instance attribute updated_at with the current datetime"""
-        self.updated_at = datetime.datetime.now()
+        self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """
@@ -49,8 +54,15 @@ class BaseModel:
         Returns:
             a dictionary
         """
-        my_dict = self.__dict__
-        my_dict['created_at'] = my_dict['created_at'].isoformat()
-        my_dict['updated_at'] = my_dict['updated_at'].isoformat()
-        my_dict['__class__'] = self.__class__.__name__
-        return my_dict
+        cust_dic = dict()
+        for key in iter(self.__dict__):
+            value = self.__dict__[key]
+            if value is not None:
+                if hasattr(value, 'isoformat'):
+                    cust_dic[key] = value.isoformat()
+                else:
+                    if hasattr(value, 'to_dict'):
+                        cust_dic[key] = value.to_dict()
+                    else:
+                        cust_dic[key] = value
+        return cust_dic

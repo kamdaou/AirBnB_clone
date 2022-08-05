@@ -4,9 +4,7 @@ Tests for the base_model module
 """
 import datetime
 import unittest
-
 from freezegun import freeze_time
-
 from models.base_model import BaseModel
 
 
