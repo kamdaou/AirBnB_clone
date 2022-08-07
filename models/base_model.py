@@ -3,8 +3,6 @@
 import uuid
 from datetime import datetime
 
-from dateutil import parser
-
 import models
 
 
@@ -39,7 +37,7 @@ class BaseModel:
                 if key != '__class__':
                     setattr(self, key, kwargs[key])
                 if key == 'created_at' or key == 'updated_at':
-                    setattr(self, key, parser.parse(kwargs[key]))
+                    setattr(self, key, datetime.fromisoformat(kwargs[key]))
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
