@@ -3,20 +3,26 @@
 import cmd
 import models
 import json
-from models import storage
+from models import storage, BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
     class_names = {
-            "BaseModel": models.BaseModel,
-            "User": models.User,
-            "State": models.State,
-            "City": models.City,
-            "Amenity": models.Amenity,
-            "Place": models.Place,
-            "Review": models.Review
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
             }
     class_instances = {}
 
