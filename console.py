@@ -40,6 +40,8 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, class_name):
+        """Creates an instance.
+        """
         if not class_name:
             print("** class name missing **")
         elif self.__is_class(class_name):
@@ -48,6 +50,8 @@ class HBNBCommand(cmd.Cmd):
             self.__create(class_name)
 
     def do_show(self, arg):
+        """Prints the string representation of an instance.
+        """
         args = shlex.split(arg)
         key = args[0] + "." + args[1]
         HBNBCommand.class_instances = storage.all()
@@ -63,6 +67,8 @@ class HBNBCommand(cmd.Cmd):
             self.__show(args[0] + "." + args[1])
 
     def do_destroy(self, arg):
+        """Deletes an instance based on the class name and id.
+        """
         args = shlex.split(arg)
         key = args[0] + "." + args[1]
         HBNBCommand.class_instances = storage.all()
@@ -78,6 +84,8 @@ class HBNBCommand(cmd.Cmd):
             self.__destroy(args[0] + "." + args[1])
 
     def do_all(self, class_name):
+        """Prints all string representation of all instances.
+        """
         HBNBCommand.class_instances = storage.all()
         if not class_name:
             self.__all()
@@ -87,6 +95,8 @@ class HBNBCommand(cmd.Cmd):
             self.__all_of(class_name)
 
     def do_update(self, arg):
+        """Updates an instance by adding or updating attribute.
+        """
         args = shlex.split(arg)
         key = args[0] + "." + args[1]
         HBNBCommand.class_instances = storage.all()
