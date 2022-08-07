@@ -2,8 +2,8 @@
 """
 Tests for the base_model module
 """
-import datetime
 import unittest
+from datetime import datetime
 
 from models.base_model import BaseModel
 
@@ -23,9 +23,10 @@ class TestBaseModel(unittest.TestCase):
         """
         my_base_model = BaseModel()
         my_second_base_model = BaseModel()
-        self.assertIsInstance(my_base_model.created_at, datetime.datetime)
-        self.assertIsInstance(my_base_model.updated_at, datetime.datetime)
+        self.assertIsInstance(my_base_model.created_at, datetime)
+        self.assertIsInstance(my_base_model.updated_at, datetime)
         self.assertNotEqual(my_base_model.id, my_second_base_model.id)
+        self.assertNotEqual(my_base_model, my_second_base_model)
 
     def test_dict(self):
         """Test the to_dic method of BaseModel"""
@@ -52,7 +53,7 @@ class TestBaseModel(unittest.TestCase):
             '__class__': 'BaseModel',
             'test': 'test'
         }
-        self.assertIsInstance(my_second_base_model.updated_at, datetime.datetime)
-        self.assertIsInstance(my_second_base_model.created_at, datetime.datetime)
+        self.assertIsInstance(my_second_base_model.updated_at, datetime)
+        self.assertIsInstance(my_second_base_model.created_at, datetime)
         self.assertIsNot(my_base_model, my_second_base_model)
         self.assertEqual(my_second_base_model.to_dict(), my_custom_dic)
