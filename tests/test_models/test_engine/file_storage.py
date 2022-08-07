@@ -27,7 +27,10 @@ class TestFileStorage(unittest.TestCase):
         }
         with open(FILE_NAME, "r") as fp:
             my_json_dict = json.load(fp)
-            self.assertEqual(my_json_dict['BaseModel.' + my_dic.get('id')]['id'], my_custom_dic.get('id'))
+            self.assertEqual(
+                my_json_dict['BaseModel.' + my_dic.get('id')]['id'],
+                my_custom_dic.get('id')
+            )
             self.assertEqual(
                 my_json_dict['BaseModel.' + my_dic.get('id')]['created_at'],
                 my_custom_dic.get('created_at')

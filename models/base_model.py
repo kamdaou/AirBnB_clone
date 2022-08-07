@@ -18,13 +18,16 @@ class BaseModel:
         updated_at (datetime): time when the instance has been updated.
 
     Methods:
-         save: updates the public instance attribute updated_at with the current datetime.
-         to_dict: returns a dictionary containing all keys/values of __dict__ of the instance.
+         save: updates the public instance attribute
+          updated_at with the current datetime.
+         to_dict: returns a dictionary containing
+          all keys/values of __dict__ of the instance.
     """
 
     def __str__(self):
         """prints class name, id and dict"""
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}"\
+            .format(self.__class__.__name__, self.id, self.__dict__)
 
     def __init__(self, *args, **kwargs):
         """initializes instances of BaseModel class"""
@@ -44,13 +47,15 @@ class BaseModel:
             models.storage.new(self)
 
     def save(self):
-        """updates the public instance attribute updated_at with the current datetime"""
+        """updates the public instance attribute
+         updated_at with the current datetime"""
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
         """
-        returns a dictionary containing all keys/values of __dict__ of the instance
+        returns a dictionary containing all keys/values
+        of __dict__ of the instance
         Returns:
             a dictionary
         """

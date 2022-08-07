@@ -12,7 +12,8 @@ class TestBaseModel(unittest.TestCase):
     """
     TestBaseModel - Contains method that implement test cases
     Methods:
-        test_create_instance: test if an instance of class BaseModel can be created
+        test_create_instance: test if an instance
+        of class BaseModel can be created
         test_dict: Test the to_dic method of BaseModel
     """
 
