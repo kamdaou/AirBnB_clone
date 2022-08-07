@@ -19,9 +19,6 @@ class HBNBCommand(cmd.Cmd):
             }
     class_instances = {}
 
-    def (arg):
-        pass
-
     def do_quit(self, args):
         """Quit command to exit the program
         """
