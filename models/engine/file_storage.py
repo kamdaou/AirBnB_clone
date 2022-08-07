@@ -2,6 +2,7 @@
 """file_storage - contains FileStorage class"""
 import json
 import models
+from constants import FILE_NAME
 
 
 class FileStorage:
@@ -18,7 +19,7 @@ class FileStorage:
         reload(self): deserializes the JSON file to __objects (only if the JSON file (__file_path) exists ;
         otherwise, do nothing. If the file doesn’t exist, no exception should be raised)
     """
-    __file_path = 'file.json'
+    __file_path = FILE_NAME
     __objects = {}
 
     def all(self):

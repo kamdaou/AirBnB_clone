@@ -65,4 +65,5 @@ class BaseModel:
                         cust_dic[key] = value.to_dict()
                     else:
                         cust_dic[key] = value
+        cust_dic['__class__'] = self.__class__.__name__
         return cust_dic

@@ -4,11 +4,10 @@ Tests for the base_model module
 """
 import datetime
 import unittest
-from freezegun import freeze_time
+
 from models.base_model import BaseModel
 
 
-@freeze_time("2022-04-24")
 class TestBaseModel(unittest.TestCase):
     """
     TestBaseModel - Contains method that implement test cases
@@ -26,8 +25,6 @@ class TestBaseModel(unittest.TestCase):
         my_second_base_model = BaseModel()
         self.assertIsInstance(my_base_model.created_at, datetime.datetime)
         self.assertIsInstance(my_base_model.updated_at, datetime.datetime)
-        self.assertEqual(my_base_model.created_at, datetime.datetime(2022, 4, 24))
-        self.assertEqual(my_base_model.updated_at, datetime.datetime(2022, 4, 24))
         self.assertNotEqual(my_base_model.id, my_second_base_model.id)
 
     def test_dict(self):
@@ -36,8 +33,8 @@ class TestBaseModel(unittest.TestCase):
         my_dic = my_base_model.to_dict()
         my_custom_dic = {
             'id': my_dic.get('id'),
-            'created_at': datetime.datetime(2022, 4, 24).isoformat(),
-            'updated_at': datetime.datetime(2022, 4, 24).isoformat(),
+            'created_at': my_dic['created_at'],
+            'updated_at': my_dic['updated_at'],
             '__class__': 'BaseModel',
         }
         self.assertEqual(my_dic, my_custom_dic)
@@ -50,8 +47,8 @@ class TestBaseModel(unittest.TestCase):
         my_second_base_model = BaseModel(**my_dic)
         my_custom_dic = {
             'id': my_dic.get('id'),
-            'created_at': datetime.datetime(2022, 4, 24),
-            'updated_at': datetime.datetime(2022, 4, 24),
+            'created_at': my_dic['created_at'],
+            'updated_at': my_dic['updated_at'],
             '__class__': 'BaseModel',
             'test': 'test'
         }
