@@ -1,0 +1,4 @@
+env/
+venv/
+models/__pycache__
+*pycache*/
