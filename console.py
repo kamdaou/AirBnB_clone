@@ -3,6 +3,7 @@
 import cmd
 import models
 import json
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
