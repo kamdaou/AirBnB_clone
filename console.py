@@ -13,7 +13,6 @@ from models.state import State
 from models.user import User
 
 
-
 class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
