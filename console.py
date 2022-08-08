@@ -3,13 +3,15 @@
 import cmd
 import shlex
 import json
-from models import storage, BaseModel
+from models import storage
+from models.base_model import BaseModel
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+
 
 
 class HBNBCommand(cmd.Cmd):
@@ -52,35 +54,39 @@ class HBNBCommand(cmd.Cmd):
         """Prints the string representation of an instance.
         """
         args = shlex.split(arg)
+        if len(args) < 1:
+            print("** class name missing **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
         key = args[0] + "." + args[1]
         HBNBCommand.class_instances = storage.all()
-        if not args[0]:
-            print("** class name missing **")
-        elif self.__is_class(args[0]):
+        if self.__is_class(args[0]):
             print("** class doesn't exist **")
-        elif self.__has_id(key):
-            print("** instance id missing **")
         elif self.__is_class_found(key):
             print("** no instance found **")
         else:
-            self.__show(args[0] + "." + args[1])
+            self.__show(key)
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id.
         """
         args = shlex.split(arg)
+        if len(args) < 1:
+            print("** class name missing **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
         key = args[0] + "." + args[1]
         HBNBCommand.class_instances = storage.all()
-        if not args[0]:
-            print("** class name missing **")
-        elif self.__is_class(args[0]):
+        if self.__is_class(args[0]):
             print("** class doesn't exist **")
-        elif self.__has_id(key):
-            print("** instance id missing **")
         elif self.__is_class_found(key):
             print("** no instance found **")
         else:
-            self.__destroy(args[0] + "." + args[1])
+            self.__destroy(key)
 
     def do_all(self, class_name):
         """Prints all string representation of all instances.
@@ -97,30 +103,27 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance by adding or updating attribute.
         """
         args = shlex.split(arg)
+        if len(args) < 1:
+            print("** class name missing **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
         key = args[0] + "." + args[1]
         HBNBCommand.class_instances = storage.all()
-        if not args[0]:
-            print("** class name missing **")
-        elif self.__is_class(args[0]):
+        if self.__is_class(args[0]):
             print("** class doesn't exist **")
-        elif self.__has_id(key):
-            print("** instance id missing **")
         elif self.__is_class_found(key):
             print("** no instance found **")
         else:
-            self.__update(key + "." + args[0], args[2], args[3])
+            self.__update(key, args[2], args[3])
 
     @staticmethod
     def __is_class(class_name):
         return class_name not in HBNBCommand.class_names.keys()
 
     @staticmethod
-    def __has_id(class_name):
-        return not HBNBCommand.class_instances[class_name]
-
-    @staticmethod
     def __is_class_found(class_name):
-        print(HBNBCommand.class_instances)
         return class_name not in HBNBCommand.class_instances
 
     @staticmethod
