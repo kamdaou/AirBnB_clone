@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Console module"""
 import cmd
-import models
 import json
+
 from models import storage, BaseModel
 from models.amenity import Amenity
 from models.city import City
@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
         else:
             HBNBCommand.class_instances = storage.all()
-            self.__destroy(class_name)
+            self.__destroy()
 
     def do_all(self, class_name):
         HBNBCommand.class_instances = storage.all()
@@ -79,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
         elif not class_name:
             self.__all()
         else:
-            self.__all_of(class_name)
+            self.__all_of()
 
     def do_update(self, class_name, id, attribute_name, attribute_value):
         if not class_name:
@@ -95,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             HBNBCommand.class_instances = storage.all()
             key = class_name + "." + id
-            self.__update(key, attribute_name, attribute_value)
+            self.__update(key, attribute_name)
 
     @staticmethod
     def __is_class(class_name):
@@ -123,7 +123,7 @@ class HBNBCommand(cmd.Cmd):
         del HBNBCommand.class_instances[class_name]
         storage.save()
 
-    def __all():
+    def __all(self):
         res = []
         for key, value in HBNBCommand.class_instances.items():
             res.append(str(value))

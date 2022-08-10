@@ -14,4 +14,5 @@ class Place(BaseModel):
     max_guess = int(0)
     price_by_night = int(0)
     latitude = float(0.0)
+    longitude = float(0.0)
     amenity_ids = list()
